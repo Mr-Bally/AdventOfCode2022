@@ -5,16 +5,29 @@ namespace TaskSolvers.Solvers
     public class DayOneSolver : ITaskSolver
     {
         private const int _dayNumber = 1;
-        private const string _partOneFilePath = ".\\Resources\\DayOne\\PartOneInput.txt";
+        private const int _batchSize = 3;
+        private const string _inputFilePath = ".\\Resources\\DayOne\\Input.txt";
 
         public bool CanSolveTask(int dayNumber) => _dayNumber == dayNumber;
 
         public string SolvePartOne()
         {
-            var input = GetPartOneInput();
+            return GetCountOfLargerInts(GetInput()).ToString();
+        }
+
+        public string SolvePartTwo()
+        {
+            var input = GetInput();
+            var groupedInput = AddIntegersInGroups(input);
+
+            return GetCountOfLargerInts(groupedInput).ToString();
+        }
+
+        private int GetCountOfLargerInts(IEnumerable<int> numbers)
+        {
             var count = 0;
 
-            input.Aggregate((x, y) => {
+            numbers.Aggregate((x, y) => {
                 if (x < y)
                 {
                     count++;
@@ -23,18 +36,20 @@ namespace TaskSolvers.Solvers
                 return y;
             });
 
-            return count.ToString();
+            return count;
         }
 
-        public string SolvePartTwo()
+        private IEnumerable<int> AddIntegersInGroups(List<int> numbers)
         {
-            throw new NotImplementedException();
+            var groupedElements = numbers.BatchElements(_batchSize);
+
+            return groupedElements.Select(x => x.Sum());
         }
 
-        private List<int> GetPartOneInput()
+        private List<int> GetInput()
         {
             var fileReader = new FileReader();
-            return fileReader.ReadFileToListOfInts(_partOneFilePath);
+            return fileReader.ReadFileToListOfInts(_inputFilePath);
         }
     }
 }
