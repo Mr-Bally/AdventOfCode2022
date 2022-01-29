@@ -1,9 +1,6 @@
-﻿using System.Text.RegularExpressions;
-using TaskSolvers.Common;
-
-namespace TaskSolvers.Solvers
+﻿namespace TaskSolvers.Solvers
 {
-    public class DayTwoSolver : ITaskSolver
+    public class DayTwoSolver : BaseSolver
     {
         private const int _dayNumber = 2;
         private const string _inputFilePath = ".\\Resources\\DayTwo\\Input.txt";
@@ -12,11 +9,11 @@ namespace TaskSolvers.Solvers
         private const char _upChar = 'u';
         private const char _downChar = 'd';
         
-        public bool CanSolveTask(int dayNumber) => dayNumber == _dayNumber;
+        public override bool CanSolveTask(int dayNumber) => dayNumber == _dayNumber;
         
-        public string SolvePartOne()
+        public override string SolvePartOne()
         {
-            var input = GetInput();
+            var input = GetInputAsListOfStrings(_inputFilePath);
             int forwardTotal = 0;
             int depthTotal = 0;
 
@@ -45,9 +42,9 @@ namespace TaskSolvers.Solvers
             return (forwardTotal * depthTotal).ToString();
         }
 
-        public string SolvePartTwo()
+        public override string SolvePartTwo()
         {
-            var input = GetInput();
+            var input = GetInputAsListOfStrings(_inputFilePath);
             int forwardTotal = 0;
             int depthTotal = 0;
             int aimTotal = 0;
@@ -83,13 +80,5 @@ namespace TaskSolvers.Solvers
 
             return (forwardTotal * depthTotal).ToString();
         }
-
-        private List<string> GetInput()
-        {
-            var fileReader = new FileReader();
-            return fileReader.ReadFileToListOfString(_inputFilePath);
-        }
-
-        private int GetIntFromString(string line) => int.Parse(Regex.Match(line, @"\d+").Value);
     }
 }

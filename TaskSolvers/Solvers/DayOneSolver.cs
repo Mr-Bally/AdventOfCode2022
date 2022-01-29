@@ -2,22 +2,22 @@
 
 namespace TaskSolvers.Solvers
 {
-    public class DayOneSolver : ITaskSolver
+    public class DayOneSolver : BaseSolver
     {
         private const int _dayNumber = 1;
         private const int _batchSize = 3;
         private const string _inputFilePath = ".\\Resources\\DayOne\\Input.txt";
 
-        public bool CanSolveTask(int dayNumber) => _dayNumber == dayNumber;
+         public override bool CanSolveTask(int dayNumber) => _dayNumber == dayNumber;
 
-        public string SolvePartOne()
+        public override string SolvePartOne()
         {
-            return GetCountOfLargerInts(GetInput()).ToString();
+            return GetCountOfLargerInts(GetInputAsListOfInts(_inputFilePath)).ToString();
         }
 
-        public string SolvePartTwo()
+        public override string SolvePartTwo()
         {
-            var input = GetInput();
+            var input = GetInputAsListOfInts(_inputFilePath);
             var groupedInput = AddIntegersInGroups(input);
 
             return GetCountOfLargerInts(groupedInput).ToString();
@@ -44,12 +44,6 @@ namespace TaskSolvers.Solvers
             var groupedElements = numbers.BatchElements(_batchSize);
 
             return groupedElements.Select(x => x.Sum());
-        }
-
-        private List<int> GetInput()
-        {
-            var fileReader = new FileReader();
-            return fileReader.ReadFileToListOfInts(_inputFilePath);
         }
     }
 }
