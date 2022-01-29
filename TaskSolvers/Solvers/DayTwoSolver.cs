@@ -38,7 +38,7 @@ namespace TaskSolvers.Solvers
                         depthTotal -= lineValue;
                         break;
                     default:
-                        throw new Exception("Unknown char " + line[0]);
+                        throw new Exception("Unknown char " + line);
                 }
             }
 
@@ -64,16 +64,20 @@ namespace TaskSolvers.Solvers
                         break;
 
                     case _downChar:
-                        depthTotal += lineValue;
-                        aimTotal = AlterAim(aimTotal, lineValue);
+                        aimTotal += lineValue;
                         break;
 
                     case _upChar:
-                        depthTotal -= lineValue;
-                        aimTotal = AlterAim(aimTotal, -lineValue);
+                        aimTotal -= lineValue;
+                        
+                        if (aimTotal < 0)
+                        {
+                            aimTotal = 0;
+                        }
+
                         break;
                     default:
-                        throw new Exception("Unknown char " + line[0]);
+                        throw new Exception("Unknown char " + line);
                 }
             }
 
@@ -87,12 +91,5 @@ namespace TaskSolvers.Solvers
         }
 
         private int GetIntFromString(string line) => int.Parse(Regex.Match(line, @"\d+").Value);
-
-        private int AlterAim(int currentAim, int additionalAim)
-        {
-            currentAim += additionalAim;
-
-            return currentAim < 0 ? 0 : currentAim;
-        }
     }
 }
