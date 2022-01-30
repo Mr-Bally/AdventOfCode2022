@@ -5,7 +5,9 @@ namespace TaskSolvers.Solvers
 {
     public abstract class BaseSolver : ITaskSolver
     {
-        public abstract bool CanSolveTask(int daynumber);
+        public abstract int DayNumber { get; }
+
+        public bool CanSolveTask(int daynumber) => daynumber == DayNumber;
 
         public abstract string SolvePartOne();
 

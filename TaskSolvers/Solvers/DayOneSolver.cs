@@ -4,11 +4,10 @@ namespace TaskSolvers.Solvers
 {
     public class DayOneSolver : BaseSolver
     {
-        private const int _dayNumber = 1;
         private const int _batchSize = 3;
         private const string _inputFilePath = ".\\Resources\\DayOne\\Input.txt";
 
-         public override bool CanSolveTask(int dayNumber) => _dayNumber == dayNumber;
+        public override int DayNumber => 1;
 
         public override string SolvePartOne()
         {

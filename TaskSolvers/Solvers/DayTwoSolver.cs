@@ -2,14 +2,13 @@
 {
     public class DayTwoSolver : BaseSolver
     {
-        private const int _dayNumber = 2;
         private const string _inputFilePath = ".\\Resources\\DayTwo\\Input.txt";
 
         private const char _forwardChar = 'f';
         private const char _upChar = 'u';
         private const char _downChar = 'd';
-        
-        public override bool CanSolveTask(int dayNumber) => dayNumber == _dayNumber;
+
+        public override int DayNumber => 2;
         
         public override string SolvePartOne()
         {
