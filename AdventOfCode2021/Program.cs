@@ -40,5 +40,6 @@ static ServiceProvider RegisterServices()
     return new ServiceCollection()
         .AddScoped<ITaskSolver, DayOneSolver>()
         .AddScoped<ITaskSolver, DayTwoSolver>()
+        .AddScoped<ITaskSolver, DayThreeSolver>()
         .BuildServiceProvider();
 }
