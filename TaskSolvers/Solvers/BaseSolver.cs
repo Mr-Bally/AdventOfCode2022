@@ -1,4 +1,5 @@
-﻿using TaskSolvers.Common;
+﻿using System.Text.RegularExpressions;
+using TaskSolvers.Common;
 
 namespace TaskSolvers.Solvers
 {

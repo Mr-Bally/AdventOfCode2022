@@ -1,19 +1,44 @@
-﻿using TaskSolvers.Solvers;
+﻿using Microsoft.Extensions.DependencyInjection;
+using TaskSolvers.Solvers;
 
 Console.WriteLine("Advent of Code 2022 Solver");
 
-//var dayOne = new DayOneSolver();
-//var partOneSolution = dayOne.SolvePartOne();
-//var partTwoSolution = dayOne.SolvePartTwo();
+var serviceProvider = RegisterServices();
 
-//Console.WriteLine($"Day one, part 1 solution: { partOneSolution }");
-//Console.WriteLine($"Day one, part 2 solution: { partTwoSolution }");
+Console.WriteLine("Please enter the day number you wish to solve");
+var consoleLine = Console.ReadLine();
+int dayNumber;
 
-var dayTwo = new DayTwoSolver();
-var partOneSolution = dayTwo.SolvePartOne();
-var partTwoSolution = dayTwo.SolvePartTwo();
 
-Console.WriteLine($"Day two, part 1 solution: { partOneSolution }");
-Console.WriteLine($"Day two, part 2 solution: { partTwoSolution }");
+if (!int.TryParse(consoleLine, out dayNumber))
+{
+    Console.WriteLine("Invalid number entered. Exiting");
+    Console.ReadLine();
+    return;
+}
 
+var taskSolver = serviceProvider.GetServices<ITaskSolver>()
+    .FirstOrDefault(x => x.CanSolveTask(dayNumber));
+
+if (taskSolver is null)
+{
+    Console.WriteLine($"No task solver for day number {dayNumber}. Exiting");
+    Console.ReadLine();
+    return;
+}
+
+var partOneSolution = taskSolver.SolvePartOne();
+var partTwoSolution = taskSolver.SolvePartTwo();
+
+Console.WriteLine($"Day {dayNumber}, part 1 solution: { partOneSolution }");
+Console.WriteLine($"Day {dayNumber}, part 2 solution: { partTwoSolution }");
 Console.ReadLine();
+
+static ServiceProvider RegisterServices()
+{
+
+    return new ServiceCollection()
+        .AddScoped<ITaskSolver, DayOneSolver>()
+        .AddScoped<ITaskSolver, DayTwoSolver>()
+        .BuildServiceProvider();
+}

@@ -1,6 +1,6 @@
 ﻿namespace TaskSolvers.Solvers
 {
-    internal interface ITaskSolver
+    public interface ITaskSolver
     {
         bool CanSolveTask(int dayNumber);
         string SolvePartOne();
