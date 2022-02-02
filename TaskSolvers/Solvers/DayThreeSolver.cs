@@ -28,10 +28,10 @@
 
         public override string SolvePartTwo()
         {
-            var input = GetInputAsListOfStrings(_inputFilePath);
-            //return (FindNumberInCollection(input, true) * FindNumberInCollection(input, false)).ToString();
-            FindNumberInCollection(input, false);
-            return "";
+            var inputOne = GetInputAsListOfStrings(_inputFilePath);
+            var inputTwo = new List<string>(inputOne);
+            return (FindNumberInCollection(inputOne, true) * FindNumberInCollection(inputTwo, false))
+                .ToString();
         }
 
         private char[] FlipBinChar(char[] binChars)
@@ -78,8 +78,8 @@
             while (!found)
             {
                 var columnOfChars = input.Select(x => x[index]);
-                var charToRemove = IsOneMostCommonOrEqualBit(columnOfChars) && takeMostPopular ? _zeroChar : _oneChar;
-
+                var isOneMostPopular = IsOneMostCommonOrEqualBit(columnOfChars);
+                var charToRemove = GetCharToRemove(isOneMostPopular, takeMostPopular);
                 input.RemoveAll(x => x[index] == charToRemove);
 
                 if (input.Count == 1)
@@ -92,6 +92,16 @@
             }
 
             return toReturn;
+        }
+
+        private char GetCharToRemove(bool isOneMostPopular, bool takeMostPopular)
+        {
+            if ((isOneMostPopular && !takeMostPopular) || (!isOneMostPopular && takeMostPopular))
+            {
+                return _zeroChar;
+            }
+            
+            return _oneChar;
         }
     }
 }
